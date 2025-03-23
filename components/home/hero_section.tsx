@@ -1,6 +1,7 @@
 import { Sparkles } from "lucide-react";
 import { Button } from "../ui/button";
 import { Badge } from "../ui/badge";
+import { TypewriterEffect } from "../ui/typewriter-effect";
 
 export default function HeroSection() {
   return (
@@ -14,19 +15,21 @@ export default function HeroSection() {
           <p className="text-base text-amber-500 font-bold">Powered by AI</p>
         </Badge>
       </div>
-
-      <h1 className="text-3xl font-bold text-center py-6 mt-4">
-        Transform PDF's into {""}
-        <span className="relative inline-block">
-          <span className="relative z-10 px-2">concise</span>
-          <span
-            className="absolute inset-0 bg-amber-200/70 -rotate-2 rounded-lg transform -skew-y-1"
-            aria-hidden="true"
-          ></span>
-        </span>
-        {""}
-        summaries
-      </h1>
+      <TypewriterEffect
+        words={[
+          { text: "Transform" },
+          { text: "PDF's" },
+          { text: "into" },
+          { text: "concise" },
+          {
+            text: "summaries",
+            className: "text-amber-500 dark:text-amber-500",
+          },
+        ]}
+        className="text-lg sm:text-xl md:text-2xl font-bold text-center
+         py-4 sm:py-6 md:py-8 mt-2 sm:mt-4 flex flex-wrap 
+         justify-center gap-2 sm:gap-3 md:gap-4"
+      />
       <h2 className="text-lg sm:text-xl lg:text-2xl text-center  px-4 lg:px-0 lg:max-w-xl text-gray-600 mt-4">
         Get a beautiful summary of your documents in seconds
       </h2>
