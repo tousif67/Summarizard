@@ -3,6 +3,7 @@ import { z } from "zod";
 import UploadFormInput from "./upload-form-input";
 import { useUploadThing } from "@/utils/upload-thing";
 import { toast } from "sonner";
+import { generatePDFSummary } from "@/actions/upload-action";
 
 const schema = z.object({
   file: z
@@ -45,19 +46,27 @@ export default function UploadForm() {
       return;
     }
 
-    try {
-      const res = await startUpload([file]);
-      if (res) {
-        console.log("Upload response:", res[0]);
-      }
-    } catch (error) {
-      const errorMessage =
-        error instanceof Error ? error.message : "Upload failed";
-      toast.error(errorMessage);
-      console.error("Upload failed:", error);
+    const res = await startUpload([file]);
+    if (!res) {
+      toast.error("Something went wrong");
+      return;
     }
-  };
+    console.log("Upload response:", res[0]);
+    toast.message("Processing your file...");
 
+    const transformedResponse = {
+      serverData: {
+        userId: res[0].serverData.userId,
+        file: {
+          url: res[0].serverData.file,
+          name: res[0].name,
+        },
+      },
+    };
+
+    const summary = await generatePDFSummary(transformedResponse);
+    console.log(summary);
+  };
   return (
     <div className="flex flex-col gap-6 w-full max-w-2xl mx-auto">
       <UploadFormInput handleSubmit={handleSubmit} />

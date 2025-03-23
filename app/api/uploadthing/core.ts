@@ -6,7 +6,7 @@ const f = createUploadthing();
 
 export const ourFileRouter = {
   pdfUploader: f({
-    pdf: { maxFileSize: "32MB" }
+    pdf: { maxFileSize: "16MB" }
   })
     .middleware(async ({ req }) => {
       const user = await currentUser();
@@ -18,7 +18,7 @@ export const ourFileRouter = {
         console.log("Upload completed for user", metadata.userId);
         console.log("File key", file);
         return { 
-          userId: metadata.userId,file:file.url
+          userId: metadata.userId,file:file.ufsUrl
         };
     }),
 } satisfies FileRouter;
